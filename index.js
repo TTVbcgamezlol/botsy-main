@@ -210,6 +210,52 @@ bot.command({
   loop - Loop songs for music`
 })
 
+bot.botJoinCommand({
+ channel: "$randomChannelID",
+ code: `
+$title[Thanks for adding me]
+$description[My prefix: \`.\`, You can see what I can do by doing \`!help\`]
+$color[RANDOM]`
+})
+bot.onGuildJoin()
+
+bot.command({
+ name: "dog",
+ code: `
+$description[**$jsonRequest[https://no-api-key.com/api/v1/animals/dog;fact]**]
+
+$image[$jsonRequest[https://no-api-key.com/api/v1/animals/dog;image]]`
+ })
+
+bot.command({
+ name: "giveaway",
+ code: `
+$editMessage[$getServerVar[pene];{title:Giveaway Finished 🎉}{description:Prize: \`$messageSlice[2]\` 🎉
+Hosted By: **$userTag[$authorID]**
+Winner: $replaceText[$replaceText[$checkCondition[$getTextSplitLength==1];true;None, there were not enough participants.];false;<@$randomText[$joinSplitText[;]]>.]}{color:RANDOM}{footer:Giveaway Finished.:$authorAvatar}]
+$channelSendMessage[$channelID;$replaceText[$replaceText[$checkCondition[$getTextSplitLength==1];true;There were not enough participants.];false;The winner of the prize: \`$messageSlice[2]\` is: <@$randomText[$joinSplitText[;]]>, Congratulations!]]
+$textSplit[$replaceText[$getReactions[$channelID;$getServerVar[pene];🎉;id];$clientID,;];,]
+$wait[$message[1]]
+$setServerVar[pene;$sendMessage[{title:React with 🎉 to participate!.}{description: 🎉 Prize: \`$messageSlice[2]\` 🎉
+Hosted By: **$userTag[$authorID]**
+Time: **$message[1]**}{timestamp}{color:RED}{reactions:🎉};yes]]
+$onlyIf[$messageSlice[2]!=;{title:Looking For Arguments}{description:You have not put any prize to draw.Follow This Format: 
+\`\`\`
+- $getServerVar[prefix]giveaway <time> <prize>.\`\`\`
+\`Arguments with<> are required \`
+}{color:ORANGE}]
+$onlyIf[$isNumber[$replaceText[$replaceText[$replaceText[$replaceText[$message[1];s;];m;];h;];d;]]!=false;{title:Invalid Format}{description:The time format you just entered is invalid Follow this example:
+\`\`\`
+1s Is 1 second 
+1m Is 1 minute
+1h Is 1 hour
+1d Is 1 day
+\`\`\`}{color:RED}]
+
+$onlyPerms[admin;{title:No Permission}{description:You Dont Have \`ADMINISTRATOR\` Permission To Use This Command.}{color:RED}]
+$onlyIf[$getUserVar[premium;$authorID]==true;**⛔ You need \`premium\` to use this command**`
+})
+
 bot.command({
 name: "rob",
 code: `
