@@ -98,7 +98,13 @@ bot.command({
   
  🌀 The Vortex
  .vortex]
-  $color[WHITE]`
+  $color[WHITE]
+
+---Links---
+https://discord.gg/gy9VkfAMEK - Support Server
+https://discord.com/oauth2/authorize?client_id=877181746989371444&scope=bot%20applications.commands&permissions=8589934591 - Invite
+
+Join the support to claim premium if you want!`
 })
 
 bot.command({
