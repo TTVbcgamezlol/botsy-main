@@ -69,122 +69,179 @@ bot.timeoutCommand({
 })
 
 bot.command({
-  name: "help",
-  code: `
-$let[e;$apiMessage[;{title:Help Command}
-{thumbnail:$authorAvatar}
-{field:General:Click the Button:true}
-{field:Economy:Click the Button:true}
-{field:Fun:Click the Button:true}
-{field:Moderator:Click the Button:true}
-{field:Other:Click the Other Button:true}
- 
-{color:#5865F2};{actionRow:General,2,1,GeneralButton,:Economy,2,1,EconomyButton,:Fun,2,1,FunButton,:Moderator,2,1,ModeratorButton,:Other,2,1,OtherButton};;yes]]`
-})
- 
-bot.onInteractionCreate()
-bot.interactionCommand({
- name: "GeneralButton",
- prototype:"button",
- code:`
-$interactionDelete
-$wait[10s]
-$interactionEdit[;{color:#2f3136}{title:General Commands}{description:General Comamnds}]
-$wait[3s]
-$interactionReply[I'm loading general commands;;;0;4]`
-})
- 
-bot.interactionCommand({
- name: "EconomyButton",
- prototype:"button",
- code:`$interactionDelete
-$wait[10s]
-$interactionEdit[;{color:#2f3136}{title:Economy Commands}{description: **profile
-  shop
-  beg
-  work
-  bal
-  deposit
-  withdraw
-  daily
-  open-daily
-  buy-(item from shop)
-  lb-wallet
-  lb-bank
-  fish
-  rob
-  steal
-  search
-  scrap-(item from shop)**}]
-$wait[3s]
-$interactionReply[I'm loading economy commands;;;0;4]`
-})
- 
-bot.interactionCommand({
- name: "FunButton",
- prototype:"button",
- code:`$interactionDelete
-$wait[10s]
-$interactionEdit[;{color:#2f3136}{title:Fun Commands}{description:gtn (numbers etc 1 - 20)
-  **gtnstats
-  meme
-  trump-tweet (message)
-  countdown
-  cat
-  dog**}]
-$wait[3s]
-$interactionReply[I'm loading fun commands;;;0;4]`
-})
- 
-bot.interactionCommand({
- name: "ModeratorButton",
- prototype:"button",
- code:`$interactionDelete
-$wait[10s]
-$interactionEdit[;{color:#2f3136}{title:Moderation Commands}{description:kick @user
-  **purge (no amount of messages)
-  ban @user (reason)
-  unban (user ID)
-  warn @user [reason]
-  warnings @user
-  unwarn @user**}]
-$wait[3s]
-$interactionReply[I'm loading moderation commands;;;0;4]`
-})
- 
-bot.interactionCommand({
- name: "OtherButton",
- prototype: "button",
- code:`$interactionDelete
-$wait[10s]
-$interactionEdit[;{color:#2f3136}{title:Other Commands}{description:setup-modlogs
+name: "help",
+code: `$reactionCollector[$splitText[1];everyone;1m;🔄,1️⃣,2️⃣,⬆,🎶,➕,📫,🐸,👋,💫,⚙;awaitReaction1,awaitReaction2,awaitReaction3,awaitReaction4,awaitReaction5,awaitReaction6,awaitReaction7,awaitReaction8,awaitReaction9,awaitReaction10,awaitReaction11;yes]
+$textSplit[$sendMessage[{title: Help} {description:Help Command Pages:
+1️⃣ - Moderation
+2️⃣ - Economy
+⬆ - Levelling
+🎶 - Music
+➕ - Custom replies
+📫 - Tickets
+🐸 - Fun Commands
+👋 - Welcome/leave messages
+💫 - The Vortex
+⚙ - Utility Commands
 
-__**Level Commands**__
-**rank
-  setrankmsg -message
-  setrank channel
-  resetrank** - reset the level up channel
+NOTE
+Our support server contains extra secret commands!} {color:RANDOM};yes]; ]`})
 
-__**Music Commands**__
-**play (song)
-  pause
-  resume
-  stop
-  loop
-  np
-  skip
-  clearqueue**
+bot.awaitedCommand({
+ name: "awaitReaction1",
+ code: `$editMessage[$message[1];{title:Help} {description:Help Command Pages:
+1️⃣ - Moderation 
+2️⃣ - Economy
+⬆ - Levelling
+🎶 - Music
+➕ - Custom Replies
+📫 - Tickets
+🐸 - Fun Commands
+👋 - Welcome/LEave messages
+💫 - The Vortex
+⚙ - Utility Commands
 
-__**Premium Commands**__
-  **invites** - check your invites
-  **unwarn @user** - Unwarn a user
-  **setrankmsg** - change the level up message
-  **deaf @user** - Deafen a user in VC
-  **undeaf @user** - Undeafen a user in VC
-  **loop** - Loop songs for music
-  **giveaway** - Setup a giveaway
-$wait[3s]
-$interactionReply[I'm loading other commands;;;0;4]`
+NOTE
+Our support server contains extra secret commands!} {color:RANDOM}
+]
+`})
+
+bot.awaitedCommand({
+ name: "awaitReaction2",
+ code: `
+ $editMessage[$message[1];{title:Moderation} {description:ban @user reason - ban a user
+unban userid - unban a user
+kick @user - kick a user
+warn @user reason - warn a user
+unwarn @user - remove a warning
+warnings @user - Check a users server warnings
+deaf @user - Deafens a user
+undeaf @user - removes a users deafen} {color:RANDOM} 
+]
+ `
+})
+
+bot.awaitedCommand({
+ name: "awaitReaction3",
+ code: `
+ $editMessage[$message[1];{footer:🔄 - Return to home page}
+{title:Economy} {description:(P)work 
+(p)beg
+(p)bal = balance 
+(p)profile
+(p)deposit (amount)
+(p)withdraw (amount)
+(p)daily 
+(p)open-daily
+(p)heist
+(p)givemoney
+(p)shop
+(p)buy-(item) = buy an item from the shop
+(p)buy-spiteful
+(p)open-spiteful
+(p)buy-lucky
+(p)open-lucky} {color:RANDOM} 
+]
+ `
+})
+
+bot.awaitedCommand({
+ name: "awaitReaction4",
+ code: `
+ $editMessage[$message[1];{footer:🔄 - Return to home page}
+{title:Levelling} {description:(p)set-rank (channelID) - REQUIRED FOR SETUP
+(p)setrankmsg
+(p)rank} {color:RANDOM} 
+]
+ `
+})
+
+bot.awaitedCommand({
+ name: "awaitReaction5",
+ code: `
+ $editMessage[$message[1];{footer:🔄 - Return to home page}
+{title:Music} {description:(p)play (song) = play the song
+(p)pause = Pause the song
+(P)resume = resume the song 
+(p)loop = loop the song
+(p)nowplaying = shows the currently playing song 
+(P)skip = skip the song
+(p)queue = show the queued songs
+(p)clearqueue = clear the queue
+ (p)volume (volume) = The volume.
+} {color:RANDOM} 
+]
+ `
+})
+
+bot.awaitedCommand({
+ name: "awaitReaction6",
+ code: `
+ $editMessage[$message[1];{footer:🔄 - Return to home page}
+{title:Custom Replies} {description:COMING SOON} {color:RANDOM} 
+]
+ `
+})
+
+bot.awaitedCommand({
+ name: "awaitReaction7",
+ code: `
+ $editMessage[$message[1];{footer:🔄 - Return to home page}
+{title:Tickets} {description:SETUP
+Start by creating a category called TICKETS make it private and only you, your staff and AKN can see it.
+
+Then do (p)setup then copy paste your tickets category ID and send it. Thats it, when a user needs help they will do (p)ticket and it will open a channel for them.
+
+COMMANDS
+(p)ticket = Opens a ticket
+(p)close = Closes the ticket} {color:RANDOM} 
+]
+ `
+})
+
+bot.awaitedCommand({
+ name: "awaitReaction8",
+ code: `
+ $editMessage[$message[1];{footer:🔄 - Return to home page}
+{title:Fun} {description:
+(p)gtn
+(p)gtnstats
+(p)meme
+(p)trump-tweet (message)} {color:RANDOM} 
+]
+ `
+})
+
+bot.awaitedCommand({
+ name: "awaitReaction9",
+ code: `
+ $editMessage[$message[1];{footer:🔄 - Return to home page}
+{title:Welcome/Leave Messages} {description:COMING SOON} {color:RANDOM} 
+]
+ `
+})
+
+bot.awaitedCommand({
+ name: "awaitReaction10",
+ code: `
+ $editMessage[$message[1];{footer:🔄 - Return to home page}
+{title:The Vortex} {description:The Vortex is my links. Like my support server and more!
+
+My support server: 
+
+Thanks to everyone using Botsy! We thank you that you all love it!} {color:RANDOM} 
+]
+ `
+})
+
+bot.awaitedCommand({
+ name: "awaitReaction11",
+ code: `
+ $editMessage[$message[1];{footer:🔄 - Return to home page}
+{title:Utility Commands} {description:
+(p)deaf @user - Deafen a user
+{color:RANDOM} 
+]
+ `
 })
 
 bot.botJoinCommand({
