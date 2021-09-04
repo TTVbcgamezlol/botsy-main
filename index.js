@@ -117,7 +117,10 @@ bot.command({
   unban (user ID)
   warn @user [reason]
   warnings @user
-  unwarn @user`
+  unwarn @user
+
+---Mod Logs---
+setup-modlogs`
 })
 
 bot.command({
@@ -218,6 +221,75 @@ $description[My prefix: \`.\`, You can see what I can do by doing \`!help\`]
 $color[RANDOM]`
 })
 bot.onGuildJoin()
+
+ bot.command({
+  name: "setup-modlogs",
+  aliases: ["s-modlogs"],
+  code: `
+  
+  $if[$message[1]==remove]
+  $setServerVar[modlogs;0]
+  $color[RANDOM]
+  $channelSendMessage[$getServerVar[modlogs];<@$authorID> - Mod Logs Channel was removed by $username #$discriminator[$authorID].]
+  $suppressErrors
+ 
+  $else
+  $if[$channelExists[$findServerChannel[$message]]==true]
+  $setServerVar[modlogs;$findServerChannel[$message]]
+  $description[<#$findServerChannel[$message]> set as Mod Logs Chaanel from <#$channelCategoryID[$findServerChannel[$messag]]> Category.]
+  $color[RANDOM]
+  
+  $endif
+  $endif
+  
+  $argsCheck[>1;{title:Missing Arguments}{description:$getServerVar[prefix]s-modlogs <#channel/ID/remove>}{color:RED}]
+  $onlyPerms[manageserver;{title:Missing Permissions}{description:Missing Manage Server permission}{color:RED}]`
+  
+}
+
+bot.command({
+ name: "tsetup",
+ code: `
+ $awaitMessages[$authorID;30s;everything;tsp2;Command has been cancelled]
+ $sendMessage[**Which Category Do you want to make For Ticket System.
+ Provide the Category ID. 
+ This Command will be cancelled after** \`30 seconds\`.;no]
+ $onlyPerms[admin;Only Users with \`ADMIN\` perms can use this{delete:10s}]
+ $suppressErrors[]`
+})
+ 
+bot.awaitedCommand({
+ name: "tsp2",
+ code: `
+**✅ Setup ticket is complete**
+ $setServerVar[ticketchannel;$message]
+ $onlyIf[$channelExists[$message]==true;Provided Category Doesn't Exist{delete:10s}]
+ $onlyIf[$isNumber[$message]==true;Please provide Category ID{delete:10s}]`
+})
+ 
+bot.command({
+ name: "ticket",
+ code: `
+$newTicket[ticket-$username[$authorID];{title:Ticket opened!}{description:Hello, <@$authorID>. Here is your ticket!:tickets: Please give the information about your problem or feedback. 
+Thanks in advance for being patient}{footer:Use close to close your ticket};$getServerVar[ticketchannel];no;<@$authorID>, I failed to create your ticket! Try again]
+$sendMessage[Ticket Successfully opened! Hello, <@$authorID>. Go to **$toLowercase[#$username$discriminator]** to describe your issue!;Something went wrong]`
+})
+ 
+bot.command({
+ name: "close",
+ code: `
+$closeTicket[This is not a ticket]
+$onlyIf[$checkContains[$channelName;ticket]==true;This command can only be used in tickets{delete:10s}]
+$suppressErrors`
+})
+
+bot.command({
+ name: "cat",
+ code: `
+$description[**$jsonRequest[https://no-api-key.com/api/v1/animals/cat;fact]**]
+
+$image[$jsonRequest[https://no-api-key.com/api/v1/animals/cat;image]]`
+})
 
 bot.command({
  name: "dog",
@@ -1054,7 +1126,10 @@ $onlyIf[$mentioned[1]!=;**⛔ Mention the user you want to warn and provide a re
 $onlyIf[$mentioned[1]!=$authorID;**⛔ You can't warn yourself**]
 $onlyIf[$isBot[$mentioned[1;yes]]!=true;**⛔ You can't warn a bot**]
 $onlyBotPerms[manageroles;⛔ **I don't have** \`MANAGAGE_ROLES\` perms]
-$onlyPerms[manageroles;⛔ **You don't have** \`MANAGAGE_ROLES\` perms]`
+$onlyPerms[manageroles;⛔ **You don't have** \`MANAGAGE_ROLES\` perms]
+$if[$serverChannelExists[$getServerVar[modlogs]]==true]
+$channelSendMessage[$getServerVar[modlogs];<@$authorID>{title:Mod Logs}{field:Action:Warn}{field:Moderator:$username}{field:User:$username[$findUser[$message[1]]]#$discriminator[$findUser[$message[1]]]\n(\`$findUser[$message[1]]\`)}{thumbnail:$userAvatar[$findUser[$message[1]]]}{color:RANDOM}]
+$endif`
 })
  
 bot.command({
@@ -1070,7 +1145,10 @@ $description[
 (\`$mentioned[1;yes]\`)]
 $onlyIf[$getUserVar[warn;$findUser[$message]]>0;**⛔ The warnings of this user is already at 0**]
 $onlyIf[$mentioned[1]!=;**⛔ You must mention someone**]
-$onlyIf[$isBot[$mentioned[1;yes]]!=true;**⛔ You can't warn a bot, so they don't have warnings**]`
+$onlyIf[$isBot[$mentioned[1;yes]]!=true;**⛔ You can't warn a bot, so they don't have warnings**]
+$if[$serverChannelExists[$getServerVar[modlogs]]==true]
+$channelSendMessage[$getServerVar[modlogs];<@$authorID>{title:Mod Logs}{field:Action:Warnings}{field:Moderator:$username}{field:User:$username[$findUser[$message[1]]]#$discriminator[$findUser[$message[1]]]\n(\`$findUser[$message[1]]\`)}{thumbnail:$userAvatar[$findUser[$message[1]]]}{color:RANDOM}]
+$endif`
 })
  
 bot.command({
@@ -1089,7 +1167,10 @@ $onlyIf[$mentioned[1]!=$authorID;**⛔ You can't unwarn yourself**]
 $onlyIf[$mentioned[1]!=;**⛔ You must mention someone**, Correct usage: \`$getServerVar[prefix]unwarn <@user>\`]
 $onlyPerms[manageroles;⛔ **I don't have** \`MANAGAGE_ROLES\` perms**]
 $onlyBotPerms[manageroles;⛔ **I don't have** \`MANAGAGE_ROLES\` perms**]
-$onlyIf[$getUserVar[premium;$authorID]==true;**⛔ You need \`premium\` to use this command**`
+$onlyIf[$getUserVar[premium;$authorID]==true;**⛔ You need \`premium\` to use this command**
+$if[$serverChannelExists[$getServerVar[modlogs]]==true]
+$channelSendMessage[$getServerVar[modlogs];<@$authorID>{title:Mod Logs}{field:Action:Unwarn}{field:Moderator:$username}{field:User:$username[$findUser[$message[1]]]#$discriminator[$findUser[$message[1]]]\n(\`$findUser[$message[1]]\`)}{thumbnail:$userAvatar[$findUser[$message[1]]]}{color:RANDOM}]
+$endif`
 })
 
 bot.command({
@@ -1099,7 +1180,10 @@ $username[$message[1]] **has been unbanned ✅**
 $onlyBotPerms[ban;**⛔ I don't have ban perms]
 $argsCheck[>1;**⛔ Please Provide User ID To Unban**]
 $onlyPerms[ban;**⛔ You need ban permission**]
-$suppressErrors[**⛔ I can't find that user**]`
+$suppressErrors[**⛔ I can't find that user**]
+$if[$serverChannelExists[$getServerVar[modlogs]]==true]
+$channelSendMessage[$getServerVar[modlogs];<@$authorID>{title:Mod Logs}{field:Action:Unban}{field:Moderator:$username}{field:User:$username[$findUser[$message[1]]]#$discriminator[$findUser[$message[1]]]\n(\`$findUser[$message[1]]\`)}{thumbnail:$userAvatar[$findUser[$message[1]]]}{color:RANDOM}]
+$endif`
 })
 
 bot.command({
@@ -1131,7 +1215,10 @@ $endif
 $onlyIf[$isBanned[$findUser[$message[1]]]==false;**⛔ - This user has already been banned on this server**]
 $onlyIf[$message!=;**⛔ - Please specify the user you want to ban. Correct usage:** \`$getServerVar[prefix]ban <@User> [Reason\\]\`]
 $onlyPerms[ban;**⛔ - To use this you require the \`BAN_MEMBERS\` permission**]
- $onlyBotPerms[ban;**⛔ - I don't have enough perms to execute this command. Permissions missing:** \`BAN_MEMBERS\`]`
+ $onlyBotPerms[ban;**⛔ - I don't have enough perms to execute this command. Permissions missing:** \`BAN_MEMBERS\`]
+$if[$serverChannelExists[$getServerVar[modlogs]]==true]
+$channelSendMessage[$getServerVar[modlogs];<@$authorID>{title:Mod Logs}{field:Action:Ban}{field:Moderator:$username}{field:User:$username[$findUser[$message[1]]]#$discriminator[$findUser[$message[1]]]\n(\`$findUser[$message[1]]\`)}{thumbnail:$userAvatar[$findUser[$message[1]]]}{color:RANDOM}]
+$endif`
 })
 
 
@@ -1155,7 +1242,10 @@ $onlyIf[$memberExists[$findUser[$message[1]]]==true;**❌ Couldn't find a member
 $onlyIf[$findUser[$message[1]]!=$ownerID;**❌ I can't modify the server owner**]
 $onlyIf[$message[1]!=;**❌ Please mention someone to kick**]
 $onlyBotPerms[kick;**❌ The bot doesn't have enough permissions**]
-$onlyPerms[kick;**❌ You don't have enough permission**]`
+$onlyPerms[kick;**❌ You don't have enough permission**]
+$if[$serverChannelExists[$getServerVar[modlogs]]==true]
+$channelSendMessage[$getServerVar[modlogs];<@$authorID>{title:Mod Logs}{field:Action:Kick}{field:Moderator:$username}{field:User:$username[$findUser[$message[1]]]#$discriminator[$findUser[$message[1]]]\n(\`$findUser[$message[1]]\`)}{thumbnail:$userAvatar[$findUser[$message[1]]]}{color:RANDOM}]
+$endif`
 })
 
 bot.command({
@@ -1410,4 +1500,6 @@ reason: "0",
     DailyChest: "0",
     lucky: "0",
     spiteful: "0",
+ticketchannel: "",
+modlogs: "0",
  })
