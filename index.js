@@ -70,73 +70,36 @@ bot.timeoutCommand({
 
 bot.command({
   name: "help",
-  aliases: ["commands"],
   code: `
-  $title[Help Page;https://discord.gg/gy9VkfAMEK]
-  $description[Welcome to Botsy Help Page
-  
-  __🛠 Moderation Commands__
-  .modcommands
-  
-  __🐸 Fun Commands__
-  .funcommands
-  
-  __📜 Utility Commands__
-  .utilcommands
-  
- __🔧 Config Commands__
-  .configcommands
-  
-  __🛡 Security Commands__
-  .seccommands
-  
-  __🔮 Level Commands__
-  .lvlcommands
-  
-  🎵 Music Commands
-  .musiccommands
-  
- __🌀 The Vortex__
- .vortex]
-  $color[WHITE]
-
----Links---
-https://discord.gg/gy9VkfAMEK - Support Server
-https://discord.com/oauth2/authorize?client_id=877181746989371444&scope=bot%20applications.commands&permissions=8589934591 - Invite
-
-Join the support to claim premium if you want!`
+$let[e;$apiMessage[;{title:Help Command}
+{thumbnail:$authorAvatar}
+{field:General:Click the Button:true}
+{field:Economy:Click the Button:true}
+{field:Fun:Click the Button:true}
+{field:Moderator:Click the Button:true}
+{field:Other:Click the Other Button:true}
+ 
+{color:#5865F2};{actionRow:General,2,1,GeneralButton,:Economy,2,1,EconomyButton,:Fun,2,1,FunButton,:Moderator,2,1,ModeratorButton,:Other,2,1,OtherButton};;yes]]`
 })
-
-bot.command({
-  name: "modcommands",
-  code: `
-  $title[Moderation Commands]
-  $description[kick @user
-  **purge (no amount of messages)
-  ban @user (reason)
-  unban (user ID)
-  warn @user [reason]
-  warnings @user
-  unwarn @user**
-
----Mod Logs---
-setup-modlogs`
+ 
+bot.onInteractionCreate()
+bot.interactionCommand({
+ name: "GeneralButton",
+ prototype:"button",
+ code:`
+$interactionDelete
+$wait[10s]
+$interactionEdit[;{color:#2f3136}{title:General Commands}{description:General Comamnds}]
+$wait[3s]
+$interactionReply[I'm loading general commands;;;0;4]`
 })
-
-bot.command({
-  name: "funcommands",
-  code: `
-  $title[Fun Commands]
-  $description[gtn (numbers etc 1 - 20)
-  **gtnstats
-  meme
-  trump-tweet (message)
-  countdown
-  cat
-  dog**
-  
-  __--Economy Commands--__
-  **profile
+ 
+bot.interactionCommand({
+ name: "EconomyButton",
+ prototype:"button",
+ code:`$interactionDelete
+$wait[10s]
+$interactionEdit[;{color:#2f3136}{title:Economy Commands}{description: **profile
   shop
   beg
   work
@@ -152,68 +115,76 @@ bot.command({
   rob
   steal
   search
-  scrap-(item from shop)**]`
+  scrap-(item from shop)**}]
+$wait[3s]
+$interactionReply[I'm loading economy commands;;;0;4]`
 })
-
-bot.command({
-  name: "utilcommands",
-  code: `
-  $title[Utility Commands]
-  $description[**invites** - check your invites]`
+ 
+bot.interactionCommand({
+ name: "FunButton",
+ prototype:"button",
+ code:`$interactionDelete
+$wait[10s]
+$interactionEdit[;{color:#2f3136}{title:Fun Commands}{description:gtn (numbers etc 1 - 20)
+  **gtnstats
+  meme
+  trump-tweet (message)
+  countdown
+  cat
+  dog**}]
+$wait[3s]
+$interactionReply[I'm loading fun commands;;;0;4]`
 })
-
-bot.command({
-  name: "configcommands",
-  code: `
-  $title[Config Commands]
-  $description[]
-  `
+ 
+bot.interactionCommand({
+ name: "ModeratorButton",
+ prototype:"button",
+ code:`$interactionDelete
+$wait[10s]
+$interactionEdit[;{color:#2f3136}{title:Moderation Commands}{description:kick @user
+  **purge (no amount of messages)
+  ban @user (reason)
+  unban (user ID)
+  warn @user [reason]
+  warnings @user
+  unwarn @user**}]
+$wait[3s]
+$interactionReply[I'm loading moderation commands;;;0;4]`
 })
+ 
+bot.interactionCommand({
+ name: "OtherButton",
+ prototype: "button",
+ code:`$interactionDelete
+$wait[10s]
+$interactionEdit[;{color:#2f3136}{title:Other Commands}{description:setup-modlogs
 
-bot.command({
-  name: "seccommands",
-  code: `
-  $title[Security Commands]
-  $description[]
-  $onlyIf[$getUserVar[premium;$authorID]==true;**⛔ You need \`premium\` to use this command**`
-})
-
-bot.command({
-  name: "lvlcommands",
-  code: `
-  $title[Level Commands]
-  $description[**rank
+__**Level Commands**__
+**rank
   setrankmsg -message
   setrank channel
-  resetrank** - reset the level up channel]
-    `
-})
+  resetrank** - reset the level up channel
 
-bot.command({
-  name: "musiccommands",
-  code: `
-  $title[Music Commands]
-  $description[**play (song)
+__**Music Commands**__
+**play (song)
   pause
   resume
   stop
   loop
   np
   skip
-  clearqueue**]`
-})
+  clearqueue**
 
-bot.command({
-  name: "vortex",
-  code: `$title[The Vortex]
-  $description[This is the premium page. You can see the premium commands here.
+__**Premium Commands**__
   **invites** - check your invites
   **unwarn @user** - Unwarn a user
   **setrankmsg** - change the level up message
   **deaf @user** - Deafen a user in VC
   **undeaf @user** - Undeafen a user in VC
   **loop** - Loop songs for music
-  **giveaway** - Setup a giveaway`
+  **giveaway** - Setup a giveaway
+$wait[3s]
+$interactionReply[I'm loading other commands;;;0;4]`
 })
 
 bot.botJoinCommand({
