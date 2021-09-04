@@ -132,6 +132,8 @@ bot.command({
   meme
   trump-tweet (message)
   countdown
+  cat
+  dog
   
   --Economy Commands--
   profile
@@ -210,7 +212,8 @@ bot.command({
   setrankmsg - change the level up message
   deaf @user - Deafen a user in VC
   undeaf @user - Undeafen a user in VC
-  loop - Loop songs for music`
+  loop - Loop songs for music
+  **giveaway** - Setup a giveaway`
 })
 
 bot.botJoinCommand({
