@@ -225,9 +225,7 @@ bot.onGuildJoin()
  bot.command({
   name: "setup-modlogs",
   aliases: ["s-modlogs"],
-  code: `
-  
-  $if[$message[1]==remove]
+  code: `$if[$message[1]==remove]
   $setServerVar[modlogs;0]
   $color[RANDOM]
   $channelSendMessage[$getServerVar[modlogs];<@$authorID> - Mod Logs Channel was removed by $username #$discriminator[$authorID].]
@@ -245,7 +243,7 @@ bot.onGuildJoin()
   $argsCheck[>1;{title:Missing Arguments}{description:$getServerVar[prefix]s-modlogs <#channel/ID/remove>}{color:RED}]
   $onlyPerms[manageserver;{title:Missing Permissions}{description:Missing Manage Server permission}{color:RED}]`
   
-}
+})
 
 bot.command({
  name: "tsetup",
