@@ -75,28 +75,28 @@ bot.command({
   $title[Help Page;https://discord.gg/gy9VkfAMEK]
   $description[Welcome to Botsy Help Page
   
-  🛠 Moderation Commands
+  __🛠 Moderation Commands__
   .modcommands
   
-  🐸 Fun Commands
+  __🐸 Fun Commands__
   .funcommands
   
-  📜 Utility Commands
+  __📜 Utility Commands__
   .utilcommands
   
-  🔧 Config Commands
+ __🔧 Config Commands__
   .configcommands
   
-  🛡 Security Commands
+  __🛡 Security Commands__
   .seccommands
   
-  🔮 Level Commands
+  __🔮 Level Commands__
   .lvlcommands
   
   🎵 Music Commands
   .musiccommands
   
- 🌀 The Vortex
+ __🌀 The Vortex__
  .vortex]
   $color[WHITE]
 
@@ -112,12 +112,12 @@ bot.command({
   code: `
   $title[Moderation Commands]
   $description[kick @user
-  purge (no amount of messages)
+  **purge (no amount of messages)
   ban @user (reason)
   unban (user ID)
   warn @user [reason]
   warnings @user
-  unwarn @user
+  unwarn @user**
 
 ---Mod Logs---
 setup-modlogs`
@@ -128,15 +128,15 @@ bot.command({
   code: `
   $title[Fun Commands]
   $description[gtn (numbers etc 1 - 20)
-  gtnstats
+  **gtnstats
   meme
   trump-tweet (message)
   countdown
   cat
-  dog
+  dog**
   
-  --Economy Commands--
-  profile
+  __--Economy Commands--__
+  **profile
   shop
   beg
   work
@@ -152,14 +152,14 @@ bot.command({
   rob
   steal
   search
-  scrap-(item from shop)]`
+  scrap-(item from shop)**]`
 })
 
 bot.command({
   name: "utilcommands",
   code: `
   $title[Utility Commands]
-  $description[invites - check your invites]`
+  $description[**invites** - check your invites]`
 })
 
 bot.command({
@@ -182,10 +182,10 @@ bot.command({
   name: "lvlcommands",
   code: `
   $title[Level Commands]
-  $description[rank
+  $description[**rank
   setrankmsg -message
   setrank channel
-  resetrank - reset the level up channel]
+  resetrank** - reset the level up channel]
     `
 })
 
@@ -193,26 +193,26 @@ bot.command({
   name: "musiccommands",
   code: `
   $title[Music Commands]
-  $description[play (song)
+  $description[**play (song)
   pause
   resume
   stop
   loop
   np
   skip
-  clearqueue]`
+  clearqueue**]`
 })
 
 bot.command({
   name: "vortex",
   code: `$title[The Vortex]
   $description[This is the premium page. You can see the premium commands here.
-  invites - check your invites
-  unwarn @user - Unwarn a user
-  setrankmsg - change the level up message
-  deaf @user - Deafen a user in VC
-  undeaf @user - Undeafen a user in VC
-  loop - Loop songs for music
+  **invites** - check your invites
+  **unwarn @user** - Unwarn a user
+  **setrankmsg** - change the level up message
+  **deaf @user** - Deafen a user in VC
+  **undeaf @user** - Undeafen a user in VC
+  **loop** - Loop songs for music
   **giveaway** - Setup a giveaway`
 })
 
@@ -220,7 +220,7 @@ bot.botJoinCommand({
  channel: "$randomChannelID",
  code: `
 $title[Thanks for adding me]
-$description[My prefix: \`.\`, You can see what I can do by doing \`!help\`]
+$description[My prefix: \`.\`, You can see what I can do by doing \`.help\`]
 $color[RANDOM]`
 })
 bot.onGuildJoin()
