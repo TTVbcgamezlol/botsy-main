@@ -69,6 +69,17 @@ bot.timeoutCommand({
 })
 
 bot.command({
+name: "botinfo",
+code: `
+$title[Bot Information] $description[
+**Status**
+**Invite**
+https://discord.com/oauth2/authorize?client_id=877181746989371444&scope=bot%20applications.commands&permissions=8589934591
+**Server**
+https://discord.gg/gy9VkfAMEK]`
+})
+
+bot.command({
 name: "help",
 code: `$reactionCollector[$splitText[1];everyone;1m;🔄,1️⃣,2️⃣,⬆,🎶,➕,📫,🐸,👋,💫,⚙;awaitReaction1,awaitReaction2,awaitReaction3,awaitReaction4,awaitReaction5,awaitReaction6,awaitReaction7,awaitReaction8,awaitReaction9,awaitReaction10,awaitReaction11;yes]
 $textSplit[$sendMessage[{title: Help} {description:Help Command Pages:
