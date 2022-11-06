@@ -1,8 +1,8 @@
 const aoijs = require("aoi.js")
 
 const bot = new aoijs.Bot({
-token: (process.env.TOKEN),
-prefix: ".",
+token: "ODE4NTQxOTE3MjY0NDEyNjcz.GCIUYm.7iVPRXtMflAhA_mM0-LBn4z2-fTyhnUW6CplwM",
+prefix: "#",
 fetchInvites: true,
 sharding: true,
     shardAmount: 5,
@@ -58,8 +58,8 @@ $setUserVar[premium;true;$authorID]
 $setTimeout[30d;
 userID: $authorID]
 $onlyIf[$getUserVar[premium;$authorID]==false;**⛔ You have already redeemed your perk**]
- $onlyIf[$hasRole[$authorID;882528856307806248]==true;{description:**⛔ You aren't a \`Premium User\` in my** [Support Server](https://discord.gg/gy9VkfAMEK)}{color:RED}]
- $onlyForServers[882526385070030868;{description:**⛔ You can use this command only in my** [Support Server](https://discord.gg/gy9VkfAMEK)}{color:RED}]`
+ $onlyIf[$hasRole[$authorID;1015880569063735326]==true;{description:**⛔ You aren't a \`Premium User\` in my** [Support Server](https://discord.gg/pwWzAQxyQ6)}{color:RED}]
+ $onlyForServers[1015713503472013312;{description:**⛔ You can use this command only in my** [Support Server](https://discord.gg/pwWzAQxyQ6)}{color:RED}]`
 })
  
 bot.timeoutCommand({
@@ -72,11 +72,9 @@ bot.command({
 name: "botinfo",
 code: `
 $title[Bot Information] $description[
-**Status**
-**Invite**
-https://discord.com/oauth2/authorize?client_id=877181746989371444&scope=bot%20applications.commands&permissions=8589934591
-**Server**
-https://discord.gg/gy9VkfAMEK]`
+[Invite](https://discord.com/api/oauth2/authorize?client_id=818541917264412673&permissions=8&scope=bot)
+[Server]()
+]`https://discord.gg/pwWzAQxyQ6
 })
 
 bot.command({
@@ -259,7 +257,7 @@ bot.botJoinCommand({
  channel: "$randomChannelID",
  code: `
 $title[Thanks for adding me]
-$description[My prefix: \`.\`, You can see what I can do by doing \`.help\`]
+$description[My prefix: \`#\`, You can see what I can do by doing \`#help\`]
 $color[RANDOM]`
 })
 bot.onGuildJoin()
