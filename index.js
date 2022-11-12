@@ -1,7 +1,7 @@
 const aoijs = require("aoi.js")
 
 const bot = new aoijs.Bot({
-token: "ODE4NTQxOTE3MjY0NDEyNjcz.GCIUYm.7iVPRXtMflAhA_mM0-LBn4z2-fTyhnUW6CplwM",
+token: (process.env.token),
 prefix: "#",
 fetchInvites: true,
 sharding: true,
