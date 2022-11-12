@@ -31,7 +31,7 @@ time: 12
 
 bot.status({
  
-text: ".help | Prefix: .",
+text: "#help | Prefix: #",
  
 type: "WATCHING",
  
